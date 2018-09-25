@@ -23,18 +23,25 @@ app.get('/block', (req, res) => {
     const newBlock = new Block(0, Date.now(), { amount: 5 });
     res.send(JSON.stringify(newBlock));
 })
-
 app.get('/blockchain',(req, res) => {
     res.send(newBlockchain.displayChain())
 })
 
-app.get('/addBlock',(req, res) => {
+app.get('/addblock',(req, res) => {
+    newBlockchain.addBlock(req.query.data)
+})
+
+app.get('/transactions',(req, res) => {
     // verification
     let successfulBlock = false;
+    let userId = req.query.userId;
+    if(!userId){
+        userId = Math.floor( Math.random()*100);
+    }
+    let user = new Users(userId);
     // check for validation
-    successfulBlock = newBlockchain.addBlock(req.query.data)
 
-    res.send(successfulBlock);
+    res.send(data);
 })
 
 app.listen(PORT, () => {
